@@ -3,11 +3,13 @@
 @section('content')
 <div style="width: 80%; margin: 0 auto; text-align: center">
     <h1 style="margin-bottom: 20px;">{{$book->title}}</h1>
+    @if($book->picture)
     <div style="margin-right: 20px;">
         <a href="#">
             <img src="{{asset('images/'.$book->picture->link)}}">
         </a>
     </div>
+    @endif
 </div>
 <div style="width: 80%; margin: 0 auto;">
     <div class="description">

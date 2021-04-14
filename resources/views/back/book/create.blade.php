@@ -39,8 +39,8 @@
     <div>
         <div>
             <h2>Status</h2>
-            <input type="radio" name="status" value="published" checked> publier<br>
-            <input type="radio" name="status" value="unpublished"> dépublier<br>
+            <input type="radio" name="status" value="published" checked> publié<br>
+            <input type="radio" name="status" value="unpublished"> non-publié<br>
         </div>
         <div>
             <h2>Fichier :</h2>

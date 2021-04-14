@@ -20,7 +20,7 @@ class FrontController extends Controller
 
     public function index()
     {
-        $books = Book::paginate(5);
+        $books = Book::published()->paginate(5);
 
         return view('front.index', ['books' => $books]);
     }

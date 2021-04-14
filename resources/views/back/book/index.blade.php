@@ -18,7 +18,7 @@
                 <th>Date de publication</th>
                 <th>Status</th>
                 <th>Édition</th>
-                <th>Show</th>
+                <th>Voir</th>
                 <th>Supprimer</th>
             </tr>
         </thead>
@@ -35,10 +35,16 @@
                 </td>
                 <td>{{$book->genre->name?? 'aucun genre' }}</td>
                 <td>{{$book->created_at}}</td>
-                <td>Status TODO</td>
+                <td>
+                    @if($book->status == 'published')
+                    <button style="width: 100px;" type="button" class="btn btn-success">Publié</button>
+                    @else
+                    <button style="width: 100px;" type="button" class="btn btn-warning">Non-publié</button>
+                    @endif
+                </td>
                 <td><a href="{{route('book.edit', $book->id)}}">Édition</a></td>
                 <td>
-                    <a href="{{route('book.show', $book->id)}}"><span>Show</span></a>
+                    <a href="{{route('book.show', $book->id)}}"><span>Voir</span></a>
                 </td>
                 <td>
                     <form class="delete" method="POST" action="{{route('book.destroy', $book->id)}}">

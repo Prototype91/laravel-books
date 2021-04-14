@@ -11,11 +11,13 @@
     <li class="list-group-item" style="padding: 20px; width: 80%; margin: 0 auto; margin-bottom: 20px;">
         <h2><a href="{{url('book', $book->id)}}">{{$book->title}}</a></h2>
         <div style="display: flex;">
+            @if($book->picture)
             <div style="margin-right: 20px;">
                 <a href="#">
                     <img width="171" src="{{asset('images/'.$book->picture->link)}}" alt="{{$book->picture->title}}">
                 </a>
             </div>
+            @endif
             <div>
                 {{$book->description}}
             </div>
