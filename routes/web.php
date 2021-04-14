@@ -22,6 +22,10 @@
 //     return App\Book::find($id);
 // });
 
+Auth::routes();
+
+// routes sécurisées
+Route::resource('admin/book', 'BookController')->middleware('auth');
 
 // Page d'accueil
 Route::get('/', 'FrontController@index');
@@ -32,3 +36,7 @@ Route::get('book/{id}', 'FrontController@show')->where(['id' => '[0-9]+']);
 Route::get('author/{id}', 'FrontController@showBookByAuthor')->where(['id' => '[0-9]+']);
 
 Route::get('genre/{id}', 'FrontController@showBooksByGenre')->where(['id' => '[0-9]+']);
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+

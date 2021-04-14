@@ -39,7 +39,8 @@ class FrontController extends Controller
         return view('front.author', ['books' => $books, 'author' => $author]);
     }
 
-    public function showBooksByGenre(int $id){
+    public function showBooksByGenre(int $id)
+    {
         $genre = Genre::find($id);
 
         $books = $genre->books()->paginate(5);
