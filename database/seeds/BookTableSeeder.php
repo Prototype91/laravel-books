@@ -12,7 +12,6 @@ class BookTableSeeder extends Seeder
      */
     public function run(): void
     {
-
         // on prendra garde de bien supprimer toutes les images avant de commencer les seeders
         Storage::disk('local')->delete(Storage::allFiles());
 

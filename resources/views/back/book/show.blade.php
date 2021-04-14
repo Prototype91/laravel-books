@@ -2,11 +2,15 @@
 
 @section('content')
 <div style="width: 80%; margin: 0 auto; text-align: center">
+    @if(!empty($book->title))
     <h1 style="margin-bottom: 20px;">{{$book->title}}</h1>
+    @endif
     <div style="margin-right: 20px;">
+        @if(!empty($book->picture))
         <a href="#">
             <img src="{{asset('images/'.$book->picture->link)}}">
         </a>
+        @endif
     </div>
 </div>
 <div style="width: 80%; margin: 0 auto;">

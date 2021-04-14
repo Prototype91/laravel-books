@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Author;
 use App\Book;
+use App\Genre;
 use Illuminate\Http\Request;
 
 class BookController extends Controller
@@ -26,7 +28,10 @@ class BookController extends Controller
      */
     public function create()
     {
-        return "create";
+        $authors = Author::pluck('name', 'id')->all();
+        $genres = Genre::pluck('name', 'id')->all();
+
+        return view('back.book.create', ['authors' => $authors, 'genres' => $genres]);
     }
 
     /**
@@ -37,7 +42,19 @@ class BookController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'title' => 'required',
+            'description' => 'required|string',
+            'genre_id' => 'integer',
+            'authors.*' => 'integer',
+            'status' => 'in:published,unpublished'
+        ]);
+
+        $book = Book::create($request->all());
+
+        $book->authors()->attach($request->authors);
+
+        return redirect()->route('book.index')->with('message', 'success');
     }
 
     /**
@@ -46,7 +63,7 @@ class BookController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(int $id)
     {
         $book = Book::find($id);
 
@@ -61,7 +78,12 @@ class BookController extends Controller
      */
     public function edit($id)
     {
-        //
+        $book = Book::find($id);
+
+        $authors = Author::pluck('name', 'id')->all();
+        $genres = Genre::pluck('name', 'id')->all();
+
+        return view('back.book.edit', compact('book', 'authors', 'genres'));
     }
 
     /**

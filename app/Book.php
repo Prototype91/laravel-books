@@ -9,6 +9,9 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Book extends Model
 {
+    protected $fillable = [
+        'title', 'description', 'genre_id'
+    ];
 
     public function genre(): BelongsTo
     {
@@ -23,5 +26,14 @@ class Book extends Model
     public function picture(): HasOne
     {
         return $this->hasOne(Picture::class);
+    }
+
+    public function setGenreIdAttribute($value)
+    {
+        if ($value == 0) {
+            $this->attributes['genre_id'] = null;
+        } else {
+            $this->attributes['genre_id'] = $value;
+        }
     }
 }
