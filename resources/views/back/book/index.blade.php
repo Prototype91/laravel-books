@@ -59,6 +59,6 @@
     @endsection
 </div>
 @section('scripts')
-<script src="{{asset('js/app.js')}}"></script>
+@parent
 <script src="{{asset('js/confirm.js')}}"></script>
 @endsection
