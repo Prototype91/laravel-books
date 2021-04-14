@@ -3,18 +3,19 @@
 @section('content')
 <div style="width: 80%; margin: 0 auto;">
     <div>
-        <h1>Ajouter un Livre : </h1>
-        <form action="{{route('book.store')}}" method="post">
+        <h1>Modifier le Livre : </h1>
+        <form action="{{route('book.update', $book->id)}}" method="post">
             {{ csrf_field() }}
+            {{method_field('PUT')}}
             <div>
                 <div>
                     <label for="title">Titre :</label> <br>
-                    <input type="text" name="title" value="{{old('title')}}" id="title" placeholder="Titre du livre">
+                    <input type="text" name="title" value="{{$book->title}}" id="title" placeholder="Titre du livre">
                     @if($errors->has('title')) <span class="error">{{$errors->first('title')}}</span>@endif
                 </div>
                 <div>
                     <label for="price">Description :</label> <br>
-                    <textarea type="text" name="description"></textarea>
+                    <textarea type="text" name="description">{{$book->description}}</textarea>
                     @if($errors->has('description')) <span class="error bg-warning text-warning">{{$errors->first('description')}}</span> @endif
                 </div>
             </div>
@@ -30,7 +31,11 @@
             <h1>Choisissez un ou plusieurs Auteurs</h1>
             <div>
                 @forelse($authors as $id => $name)
-                <input name="authors[]" value="{{$id}}" type="checkbox" id="author{{$id}}">
+                <input name="authors[]" value="{{$id}}" @if( is_null($book->authors) == false and in_array($id, $book->authors()->pluck('id')->all()))
+                checked
+                @endif
+                type="checkbox"
+                id="author{{$id}}">
                 <label for="author{{$id}}">{{$name}}</label> <br>
                 @empty
                 @endforelse
@@ -48,7 +53,7 @@
             @if($errors->has('picture')) <span class="error bg-warning text-warning">{{$errors->first('picture')}}</span> @endif
         </div>
     </div> <br>
-    <button class="btn btn-primary" type="submit">Ajouter un livre</button>
+    <button class="btn btn-primary" type="submit">Modifier le Livre</button>
     </form>
 </div>
 @endsection

@@ -95,7 +95,21 @@ class BookController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'title' => 'required',
+            'description' => 'required|string',
+            'genre_id' => 'integer',
+            'authors.*' => 'integer',
+            'status' => 'in:published,unpublished'
+        ]);
+
+        $book = Book::find($id);
+
+        $book->update($request->all());
+
+        $book->authors()->sync($request->authors);
+
+        return redirect()->route('book.index')->with('message', 'success');
     }
 
     /**
