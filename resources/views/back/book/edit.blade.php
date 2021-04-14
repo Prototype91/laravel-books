@@ -4,7 +4,7 @@
 <div style="width: 80%; margin: 0 auto;">
     <div>
         <h1>Modifier le Livre : </h1>
-        <form action="{{route('book.update', $book->id)}}" method="post">
+        <form action="{{route('book.update', $book->id)}}" method="post" enctype="multipart/form-data">
             {{ csrf_field() }}
             {{method_field('PUT')}}
             <div>
@@ -52,6 +52,12 @@
             <input type="file" name="picture">
             @if($errors->has('picture')) <span class="error bg-warning text-warning">{{$errors->first('picture')}}</span> @endif
         </div>
+        @if($book->picture)
+        <div>
+            <h2>Image associée : </h2>
+            <img src="{{asset('images/'.$book->picture->link)}}" alt="">
+        </div>
+        @endif
     </div> <br>
     <button class="btn btn-primary" type="submit">Modifier le Livre</button>
     </form>

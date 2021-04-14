@@ -6,6 +6,7 @@ use App\Author;
 use App\Book;
 use App\Genre;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class BookController extends Controller
 {
@@ -47,12 +48,36 @@ class BookController extends Controller
             'description' => 'required|string',
             'genre_id' => 'integer',
             'authors.*' => 'integer',
-            'status' => 'in:published,unpublished'
+            'status' => 'in:published,unpublished',
+            'picture' => 'image|max:3000'
         ]);
 
         $book = Book::create($request->all());
 
         $book->authors()->attach($request->authors);
+
+        // image
+        $image = $request->file('picture');
+
+        // si on associe une image à un book 
+        if (!empty($image)) {
+
+            $link = $request->file('picture')->store('/');
+
+            // mettre à jour la table picture pour le lien vers l'image dans la base de données
+            $book->picture()->create([
+                'link' => $link,
+                'title' => $request->title_image ?? $request->title
+            ]);
+        }
+
+        // méthode store retourne un link hash sécurisé
+        $link = $request->file('picture')->store('/');
+
+        $book->picture()->create([
+            'link' => $link,
+            'title' => $request->title_image ?? $request->title
+        ]);
 
         return redirect()->route('book.index')->with('message', 'success');
     }
@@ -109,6 +134,26 @@ class BookController extends Controller
 
         $book->authors()->sync($request->authors);
 
+        $image = $request->file('picture');
+
+        if (!empty($image)) {
+
+            $link = $request->file('picture')->store('/');
+
+            // suppression de l'image si elle existe 
+            if ($book->picture)
+            {
+                Storage::disk('local')->delete($book->picture->link); // supprimer physiquement l'image
+                $book->picture()->delete(); // supprimer l'information en base de données
+            }
+
+            // mettre à jour la table picture pour le lien vers l'image dans la base de données
+            $book->picture()->create([
+                'link' => $link,
+                'title' => $request->title_image ?? $request->title
+            ]);
+        }
+
         return redirect()->route('book.index')->with('message', 'success');
     }
 
@@ -121,6 +166,13 @@ class BookController extends Controller
     public function destroy($id)
     {
         $book = Book::find($id);
+
+        // suppression de l'image si elle existe 
+        if ($book->picture)
+        {
+            Storage::disk('local')->delete($book->picture->link); // supprimer physiquement l'image
+            $book->picture()->delete(); // supprimer l'information en base de données
+        }
 
         $book->delete();
 

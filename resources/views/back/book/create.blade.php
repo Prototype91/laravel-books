@@ -4,7 +4,7 @@
 <div style="width: 80%; margin: 0 auto;">
     <div>
         <h1>Ajouter un Livre : </h1>
-        <form action="{{route('book.store')}}" method="post">
+        <form action="{{route('book.store')}}" method="post" enctype="multipart/form-data">
             {{ csrf_field() }}
             <div>
                 <div>
