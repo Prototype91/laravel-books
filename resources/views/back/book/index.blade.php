@@ -40,7 +40,13 @@
                 <td>
                     <a href="{{route('book.show', $book->id)}}"><span>Show</span></a>
                 </td>
-                <td>Supprimer</td>
+                <td>
+                    <form class="delete" method="POST" action="{{route('book.destroy', $book->id)}}">
+                        {{ method_field('DELETE') }}
+                        {{ csrf_field() }}
+                        <input class="btn btn-danger" type="submit" value="Supprimer">
+                    </form>
+                </td>
             </tr>
             @empty
             aucun titre ...
@@ -52,3 +58,7 @@
     </div>
     @endsection
 </div>
+@section('scripts')
+<script src="{{asset('js/app.js')}}"></script>
+<script src="{{asset('js/confirm.js')}}"></script>
+@endsection

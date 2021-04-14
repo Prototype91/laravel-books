@@ -76,7 +76,7 @@ class BookController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(int $id)
     {
         $book = Book::find($id);
 
@@ -120,6 +120,10 @@ class BookController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $book = Book::find($id);
+
+        $book->delete();
+
+        return redirect()->route('book.index')->with('message', 'success delete');
     }
 }

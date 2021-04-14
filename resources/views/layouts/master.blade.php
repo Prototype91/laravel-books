@@ -18,7 +18,10 @@
             @yield('content')
         </div>
     </div>
+    @section('scripts')
     <script src="{{asset('js/app.js')}}"></script>
+    <script src="{{asset('js/confirm.js')}}"></script>
+    @endsection
 </body>
 
 </html>
