@@ -39,6 +39,8 @@ Route::get('genre/{id}', 'FrontController@showBooksByGenre')->where(['id' => '[0
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::post('search', 'FrontController@search');
+
 Route::middleware(["auth", "checkElevation"])->group(function() {
     Route::resource('admin/book', 'BookController');
 });

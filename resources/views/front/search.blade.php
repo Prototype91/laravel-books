@@ -1,13 +1,9 @@
 @extends('layouts.master')
 
 @section('content')
-<div style="width: 80%; margin: 0 auto; text-align: center">
-    <h1>Les derniers livres :</h1>
-    {{$books->links()}}
-</div>
 <form action="{{url('search')}}" method="POST" style="text-align: center; margin: 20px 0 20px 0">
     {{csrf_field()}}
-    <h2>Rechercher un Livre : </h2>
+    <h2>Rechercher un Livre :</h2>
     <input type="text" name='searchInput'>
     <button type="submit">Rechercher</button>
 </form>
@@ -42,7 +38,4 @@
     <li style="text-align: center">Désolé aucun article à afficher...</li>
     @endforelse
 </ul>
-<div style="width: 80%; margin: 0 auto; text-align: center">
-    {{$books->links()}}
-</div>
 @endsection
