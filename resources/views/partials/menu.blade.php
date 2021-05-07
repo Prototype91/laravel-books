@@ -9,7 +9,9 @@
         @endforelse
         @endif
         @if(Auth::check())
+        @if($isAdmin)
         <li><a href="{{route('book.index')}}">Dashboard</a></li>
+        @endif
         <li>
             <a href="{{ route('logout') }}" onclick="event.preventDefault();
             document.getElementById('logout-form').submit();

@@ -25,7 +25,7 @@
 Auth::routes();
 
 // routes sécurisées
-Route::resource('admin/book', 'BookController')->middleware('auth');
+// Route::resource('admin/book', 'BookController')->middleware('auth');
 
 // Page d'accueil
 Route::get('/', 'FrontController@index');
@@ -38,5 +38,9 @@ Route::get('author/{id}', 'FrontController@showBookByAuthor')->where(['id' => '[
 Route::get('genre/{id}', 'FrontController@showBooksByGenre')->where(['id' => '[0-9]+']);
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::middleware(["auth", "checkElevation"])->group(function() {
+    Route::resource('admin/book', 'BookController');
+});
 
 

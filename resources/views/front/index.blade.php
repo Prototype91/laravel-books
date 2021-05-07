@@ -33,7 +33,7 @@
         </div>
     </li>
     @empty
-    <li>Désolé aucun article à afficher...</li>
+    <li style="text-align: center">Désolé aucun article à afficher...</li>
     @endforelse
 </ul>
 <div style="width: 80%; margin: 0 auto; text-align: center">

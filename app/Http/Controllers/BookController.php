@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Author;
 use App\Book;
 use App\Genre;
+use App\Http\Requests\StoreBookRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -41,16 +42,16 @@ class BookController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreBookRequest $request)
     {
-        $this->validate($request, [
-            'title' => 'required',
-            'description' => 'required|string',
-            'genre_id' => 'integer',
-            'authors.*' => 'integer',
-            'status' => 'in:published,unpublished',
-            'picture' => 'image|max:3000'
-        ]);
+        // $this->validate($request, [
+        //     'title' => 'required',
+        //     'description' => 'required|string',
+        //     'genre_id' => 'integer',
+        //     'authors.*' => 'integer',
+        //     'status' => 'in:published,unpublished',
+        //     'picture' => 'image|max:3000'
+        // ]);
 
         $book = Book::create($request->all());
 
@@ -118,15 +119,15 @@ class BookController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StoreBookRequest $request, $id)
     {
-        $this->validate($request, [
-            'title' => 'required',
-            'description' => 'required|string',
-            'genre_id' => 'integer',
-            'authors.*' => 'integer',
-            'status' => 'in:published,unpublished'
-        ]);
+        // $this->validate($request, [
+        //     'title' => 'required',
+        //     'description' => 'required|string',
+        //     'genre_id' => 'integer',
+        //     'authors.*' => 'integer',
+        //     'status' => 'in:published,unpublished'
+        // ]);
 
         $book = Book::find($id);
 
@@ -141,8 +142,7 @@ class BookController extends Controller
             $link = $request->file('picture')->store('/');
 
             // suppression de l'image si elle existe 
-            if ($book->picture)
-            {
+            if ($book->picture) {
                 Storage::disk('local')->delete($book->picture->link); // supprimer physiquement l'image
                 $book->picture()->delete(); // supprimer l'information en base de données
             }
@@ -168,8 +168,7 @@ class BookController extends Controller
         $book = Book::find($id);
 
         // suppression de l'image si elle existe 
-        if ($book->picture)
-        {
+        if ($book->picture) {
             Storage::disk('local')->delete($book->picture->link); // supprimer physiquement l'image
             $book->picture()->delete(); // supprimer l'information en base de données
         }
